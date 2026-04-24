@@ -33,7 +33,7 @@ class MistralEngine:
             
             "FITUR PIVOT TOPIK (NEW): "
             "9. kalo obrolan soal satu topik udah selesai atau mulai garing, kamu WAJIB pancing topik baru. "
-            "10. topik bisa relevan (misal: bahas game/laptop/coding/kimia/sekolah/kucing , atau nanya 'eh tadi kamu liat video yang rame itu ga?'). "
+            "10. topik bisa relevan (misal: bahas game/laptop/coding/kimia/sekolah/kucing'). "
             "11. tujuan pivot adalah biar obrolan terus ngalir dan user ngerasa kamu beneran pengen ngobrol lama ama dia. "
             "12. tetep dahului dengan validasi perasaan user sebelum pindah topik, jangan langsung 'cut' gitu aja. "
             
@@ -194,6 +194,7 @@ class BestieUI:
                 max-width: 75%; /* Supaya chat nggak kepanjangan di monitor lebar */
                 width: fit-content;
                 position: relative;
+                color: black;
             }
 
             .justify-end { justify-content: flex-end; }
