@@ -45,7 +45,7 @@ class MistralEngine:
         payload = {
             "model": self.model,
             "messages": [{"role": "system", "content": self.system_prompt}] + messages,
-            "temperature": 0.6
+            "temperature": 0.3
         }
         try:
             response = requests.post(self.url, headers=self.headers, data=json.dumps(payload))
@@ -92,7 +92,7 @@ class MistralEngine:
         payload = {
             "model": self.model,
             "messages": [{"role": "system", "content": self.system_prompt}] + messages,
-            "temperature": 0.6 # Diturunkan biar nggak lebay
+            "temperature": 0.3 # Diturunkan biar nggak lebay
         }
 
         try:
@@ -277,7 +277,7 @@ class BestieApp:
         # 3. Logika Menunggu & Membalas (Debouncing)
         if st.session_state.is_waiting:
             time_since_last_msg = time.time() - st.session_state.last_input_time
-            wait_threshold = 15.0 # Bot nunggu 15 detik sebelum bales
+            wait_threshold = 10.0 # Bot nunggu 15 detik sebelum bales
 
             if time_since_last_msg < wait_threshold:
                 # Tampilkan status "nunggu" yang halus
