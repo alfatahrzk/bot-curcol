@@ -125,6 +125,7 @@ class MistralEngine:
 # ==========================================
 # 2. UI MANAGER CLASS (DYNAMIC MOOD)
 # ==========================================
+
 class BestieUI:
     MOOD_COLORS = {
         "ANGRY": "#FFB3B3", "SAD": "#B3E5FC",
@@ -135,53 +136,62 @@ class BestieUI:
     def inject_css():
         st.markdown("""
             <style>
-            /* 1. Sembunyikan elemen bawaan Streamlit agar bersih */
-            #MainMenu {visibility: hidden;}
-            header {visibility: hidden;}
-            footer {visibility: hidden;}
-            .stDeployButton {display:none;}
+            /* 1. Sembunyikan Elemen Streamlit */
+            #MainMenu, header, footer, .stDeployButton {visibility: hidden;}
             
-            /* 2. Atur Container Utama agar Ramping (Penting!) */
+            /* 2. Full Width Container */
             .main .block-container {
-                max-width: 500px; /* Batasi lebar chat biar nggak melar */
-                padding: 0;
-                margin: auto;
+                max-width: 100% !important; /* SEKARANG FULL KANAN KIRI */
+                padding: 0 !important;
+                margin: 0 !important;
             }
 
             .stApp {
                 background-color: #E5DDD5;
-                background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png"); /* WA Wallpaper */
+                background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+                background-attachment: fixed;
             }
 
-            /* 3. Custom Header WA (Fixed) */
+            /* 3. Header FULL Kanan Kiri */
             .wa-header {
                 background-color: #075E54;
                 color: white;
-                padding: 10px 15px;
+                padding: 10px 5%; /* Pake persen biar adaptif */
                 position: fixed;
                 top: 0;
-                width: 100%;
-                max-width: 500px; /* Samakan dengan block-container */
+                left: 0;
+                width: 100%; /* FULL WIDTH */
                 z-index: 1000;
                 display: flex;
                 align-items: center;
-                gap: 12px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                gap: 15px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
-            .wa-header img { border-radius: 50%; width: 38px; height: 38px; object-fit: cover; }
+            .wa-header img { 
+                border-radius: 50%; 
+                width: 40px; height: 40px; 
+                object-fit: cover; 
+                border: 1px solid rgba(255,255,255,0.3);
+            }
+            .wa-header-info { display: flex; flex-direction: column; }
             .wa-header-name { font-weight: 600; font-size: 16px; margin: 0; }
-            .wa-header-status { font-size: 11px; color: #cfdfde; margin: 0; }
+            .wa-header-status { font-size: 12px; color: #cfdfde; margin: 0; }
 
-            .header-spacer { height: 75px; } /* Biar chat nggak ketutup header */
+            .header-spacer { height: 70px; }
 
-            /* 4. Chat Bubbles */
-            .message-wrapper { display: flex; width: 100%; margin-bottom: 3px; }
+            /* 4. Chat Bubbles yang Adaptif */
+            .message-wrapper { 
+                display: flex; 
+                width: 100%; 
+                margin-bottom: 4px; 
+                padding: 0 5%; /* Kasih jarak aman di kanan kiri */
+            }
             .bubble {
-                padding: 6px 12px;
-                font-size: 14px;
-                line-height: 1.4;
-                box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-                max-width: 85%;
+                padding: 8px 14px;
+                font-size: 14.5px;
+                line-height: 1.5;
+                box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                max-width: 75%; /* Supaya chat nggak kepanjangan di monitor lebar */
                 width: fit-content;
                 position: relative;
             }
@@ -189,26 +199,35 @@ class BestieUI:
             .justify-end { justify-content: flex-end; }
             .user-bubble {
                 background-color: #DCF8C6;
-                border-radius: 7.5px 0 7.5px 7.5px;
-                margin-right: 15px;
+                border-radius: 10px 0 10px 10px;
             }
 
             .justify-start { justify-content: flex-start; }
             .bot-bubble {
-                border-radius: 0 7.5px 7.5px 7.5px;
-                margin-left: 15px;
+                border-radius: 0 10px 10px 10px;
             }
 
-            /* Hilangkan padding default chat input */
+            /* 5. Input Bar Full Width di Bawah */
             .stChatInputContainer {
-                padding-bottom: 20px !important;
-                background-color: transparent !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                padding: 10px 5% !important;
+                background-color: #f0f2f5 !important; /* Warna bar input WA */
+                border-top: 1px solid #ddd;
+            }
+            
+            .stChatInputContainer > div {
+                background-color: white !important;
+                border-radius: 25px !important;
+                border: 1px solid #eee !important;
             }
             </style>
 
             <div class="wa-header">
                 <img src="https://storage.googleapis.com/kaggle-avatars/images/24976760-kg.jpeg?t=2025-06-13-05-03-03&quot" alt="avatar">
-                <div>
+                <div class="wa-header-info">
                     <p class="wa-header-name">mas fatah</p>
                     <p class="wa-header-status">online</p>
                 </div>
