@@ -277,12 +277,12 @@ class BestieApp:
         # 3. Logika Menunggu & Membalas (Debouncing)
         if st.session_state.is_waiting:
             time_since_last_msg = time.time() - st.session_state.last_input_time
-            wait_threshold = 10.0 # Bot nunggu 10 detik sebelum bales
+            wait_threshold = 15.0 # Bot nunggu 15 detik sebelum bales
 
             if time_since_last_msg < wait_threshold:
                 # Tampilkan status "nunggu" yang halus
                 with st.empty():
-                    st.caption(f"fatah lagi nunggu kamu selesai cerita... ({int(wait_threshold - time_since_last_msg)}s)")
+                    # st.caption(f"fatah lagi nunggu kamu selesai cerita... ({int(wait_threshold - time_since_last_msg)}s)")
                     time.sleep(1)
                     st.rerun() # Refresh untuk ngecek apakah user nambah bubble lagi
             else:
